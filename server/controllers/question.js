@@ -42,7 +42,46 @@ var getQuestions = (req, res) => {
   });
 };
 
+var deleteQuestion = (req, res) => {
+  const deleteId = req.params.id;
+
+  Question.findByIdAndRemove(deleteId, (err, questionRemoved) => {
+    if (err) {
+      return res.status(500).send({
+        message: 'Error deleting question.'
+      });
+    }
+
+    if (!questionRemoved) {
+      res.status(404).send({
+        message: 'The question could not be deleted.'
+      });
+    } else {
+
+      Album.find({
+        question: questionRemoved._id
+      }).remove((err, questionRemoved) => {
+        if (err) {
+          return res.status(500).send('Error deleting question.');
+        }
+
+        if (!questionRemoved) {
+          res.status(404).send({
+            mesage: 'The question could not be deleted'
+          });
+        } else {
+          res.status(200).send({
+            question: questionRemoved
+          })
+        }
+      });
+    }
+
+  })
+}
+
 module.exports = {
   saveQuestion,
   getQuestions,
+  deleteQuestion,
 };
