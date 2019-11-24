@@ -15,18 +15,18 @@ const options = {
 };
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/mean', options,
+mongoose.connect('mongodb://localhost:27017/quiz', options,
     (err, res) => {
         if (err) {
             throw err;
-        } else {
-            console.log('DB conected.');
-            app.listen(port, () => {
-              console.log(
-                `API Rest server listening on http://localhost:${port}`
-              );
-            });
-        }
+        } 
+        console.log('DB online');
+        app.listen(port, () => {
+            console.log(
+            `API Rest server listening on http://localhost:${port}`
+            );
+        });
+        
     });
 
 const app = require("./app");

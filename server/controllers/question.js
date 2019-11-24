@@ -36,8 +36,8 @@ var getQuestions = (req, res) => {
     }
 
     return res.status(200).send({
-      total: result.total,
-      questions: result.docs
+      total: result.length,
+      questions: result
     });
   });
 };
